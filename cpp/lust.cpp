@@ -61,7 +61,47 @@ public:
     cout << "   Quits." << endl;
   }
 };
+///////////////////////////////////////////////////////////////////////////
+class SquareCommand : public LustObject {
+public:
+  virtual void handle(istringstream&& arguments) {
+    int argument;
 
+    if (!(arguments >> argument)) {
+      cout << "square: could not read integer argument." << endl;
+      return;
+    }
+
+   cout << calculate_square(argument) << endl;
+  }
+
+  virtual void print_help() {
+    cout << " square <integer>" << endl;
+    cout << "   Calculates the square of <integer>." << endl;
+  }
+
+private:
+  short calculate_square(int argument) {
+    // Hmmm...
+    long long result = 1;
+    result = argument * argument;
+    return result;
+  }
+};
+
+class QuitCommand : public LustObject {
+public:
+  virtual void handle(istringstream&& arguments) {
+    cout << "Bye!" << endl;
+    exit(0);
+  }
+
+  virtual void print_help() {
+    cout << " quit" << endl;
+    cout << "   Quits." << endl;
+  }
+};
+/////////////////////////////////////////////////////////////
 class HelpCommand : public LustObject {
 public:
   HelpCommand(map<string, unique_ptr<LustObject> > *commands)
@@ -93,6 +133,7 @@ int main() {
   // map for storing all commands
   map<string, unique_ptr<LustObject> > commands;
   commands["fact"] = unique_ptr<LustObject>(new FactorialCommand());
+  commands["square"] = unique_ptr<LustObject>(new SquareCommand());
   commands["quit"] = unique_ptr<LustObject>(new QuitCommand());
   // help command needs a pointer to the parent map in order to call each
   // command's print_help() function
