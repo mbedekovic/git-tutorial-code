@@ -41,7 +41,7 @@ public:
 private:
   short calculate_factorial(int argument) {
     // Hmmm...
-    short result = 0;
+    short result = 1;
     for (int i = 1; i <= argument; i++) {
       result *= i;
     }
